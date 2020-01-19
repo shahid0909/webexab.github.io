@@ -1,0 +1,163 @@
+create TABLE member_type(
+                         m_typeid int(10)  AUTO_INCREMENT not null ,
+   			 m_typename varchar(255) not null,
+    		         status_online_xm int(10) not null DEFAULT '1',
+   		         `update` varchar(255) not null,
+    			 update_by varchar(255) not null,
+    			 entry_date varchar(255) not null,
+    			 `status` varchar(255) not null,
+	    		 entry_by varchar(255) not null,
+		   			PRIMARY key(m_typeid)
+				);
+
+
+
+create TABLE reg_member(
+                  	id int(10)  AUTO_INCREMENT not null ,
+   			name varchar(255) not null,
+    			email varchar(255) not null DEFAULT '1',
+    			`pass` varchar(255) not null,
+		
+			sex varchar(255) not null,
+			national varchar(255) not null,
+			mob_number int(10) not null,
+    			`update` varchar(255) ,
+    			update_by varchar(255) ,
+    			entry_date varchar(255) ,
+    			`status` varchar(255) not null,
+    			entry_by varchar(255) not null,
+    			m_typeid int(10),
+    			FOREIGN KEY member_type (m_typeid) REFERENCES member_type(m_typeid),
+   			PRIMARY key(id)
+			);
+
+create TABLE exm_session(
+                 		 sessionid int(10)  AUTO_INCREMENT not null ,
+					exm_name varchar(255) not null DEFAULT '1',
+    				batch varchar(255) not null,
+    		      start_date varchar(255) not null,
+    				end_date_by varchar(255) not null,
+    				`update` varchar(255) not null,
+    				update_by varchar(255) not null,
+    				`status` varchar(255) not null,
+    				entry_by varchar(255) not null,
+    				m_typeid int(10),
+   				   PRIMARY key(sessionid)
+						);
+
+
+create TABLE exm(
+                  exm_id int(10)  AUTO_INCREMENT not null ,
+   					member_id int(10) not null,
+    					exm_sid int(10) not null DEFAULT '1',
+    					start_time time not null,
+    					end_time time not null,
+    					total_marks int(10) not null,
+    					pass_fail int(10) not null DEFAULT 0,
+    					end_date_by varchar(255) not null,
+    					`update` varchar(255) not null,
+    					update_by varchar(255) not null,
+    			   	`status` varchar(255) not null,
+    					entry_by varchar(255) not null,
+    					m_typeid int(10),
+    					FOREIGN KEY (exm_sid) REFERENCES exm_session(sessionid),
+    					
+   				        PRIMARY key(exm_id)
+						);
+
+
+create TABLE exm_paper(
+                  exm_id int(10)  AUTO_INCREMENT not null ,
+                  m_typeid int(10),
+   					ques_id int(10) not null,
+    					ans_id int(10) not null,
+    					`text` varchar(255) not null,
+    					Marking int(10) not null,
+    					`update` varchar(255) not null,
+    					update_by varchar(255) not null,
+    					`status` varchar(255) not null,
+    					entry_by varchar(255) not null,
+    					entry_date date not null,
+    				
+   				   PRIMARY key(exm_id)
+						);
+create TABLE catagory_type(
+                         c_typeid int(10)  AUTO_INCREMENT ,
+   			 c_typecatagory varchar(255),
+   			 parent int(10),
+    		     	 level` int(10),
+   		        `update` varchar(255),
+    			 update_by varchar(255),
+    			 entry_date varchar(255),
+    			`status` varchar(255),
+	    		 entry_by varchar(255) ,
+		   	PRIMARY key(c_typeid)
+				);
+create TABLE question_type(
+             q_id int(10)  AUTO_INCREMENT ,
+   			 ques  varchar(255),
+   			 catagory_id int(10),
+   		   `update` varchar(255),
+    			 update_by varchar(255),
+    			 entry_date varchar(255),
+    			`status` varchar(255),
+	    		 entry_by varchar(255) ,
+		   	PRIMARY key(q_id)
+				);
+
+create TABLE answer_type(
+             a_id int(10)  AUTO_INCREMENT ,
+   			  ans varchar(255),
+   			 catagory_id int(10),
+   		   `update` varchar(255),
+    			 update_by varchar(255),
+    			 entry_date varchar(255),
+    			`status` varchar(255),
+	    		 entry_by varchar(255) ,
+		   	PRIMARY key(a_id)
+				);
+
+create TABLE q_a_relation_type(
+             q_a_relation_id int(10)  AUTO_INCREMENT	  
+   			 q_id int(10),
+                         ans_id int(10),
+                         final_ans int(10),
+                         member_type int(10),
+   		        `update` varchar(255),
+    			 update_by varchar(255),
+    			 entry_date varchar(255),
+    			`status` int(10),
+	    		 entry_by varchar(255) ,
+		   	PRIMARY key(q_a_relation_id)
+				);
+
+
+
+
+
+
+
+
+
+
+
+----------------------question_type------------------------------
+
+
+insert into question_type(q_id,ques,catagory_id,status)
+value(1,'Microsoft phone is--',2,1)
+
+
+
+---------------------------Answer--------------------------------
+
+insert into answer_type(a_id,ans,catagory_id,status)value(1,'Windows Phone',2,1)
+insert into answer_type(a_id,ans,catagory_id,status)value(2,'Android Phone',2,1)
+insert into answer_type(a_id,ans,catagory_id,status)value(3,'Normal Phone',2,1)
+
+
+
+-------------------q_a_relation------------------
+insert into q_a_relation_type(q_a_relation_id,q_id,ans_id,final_ans,status)value(1,1,1,1,1)
+insert into q_a_relation_type(q_id,ans_id,final_ans,status)value(1,2,0,1)
+insert into q_a_relation_type(q_id,ans_id,final_ans,status)value(1,3,0,1)														);
